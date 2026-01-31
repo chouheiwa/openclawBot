@@ -57,7 +57,7 @@ if (!config.gateway) {
 // 同步环境变量到配置（每次启动都更新）
 config.gateway.mode = 'local';
 config.gateway.port = parseInt(GATEWAY_PORT);
-config.gateway.bind = 'loopback';
+config.gateway.bind = 'lan';
 
 // 注意：dmPolicy 是通道级别的配置，不是 gateway 级别的
 // 如果需要配置 dmPolicy，应该在 config.channels.<provider> 中设置
