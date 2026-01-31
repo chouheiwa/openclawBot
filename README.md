@@ -8,6 +8,17 @@ pinned: false
 license: mit
 app_port: 7860
 startup_duration_timeout: 1h
+short_description: AI Gateway for WhatsApp, Telegram, Discord & more
+suggested_hardware: cpu-basic
+tags:
+  - AI
+  - agent
+  - gateway
+  - chatbot
+  - telegram
+  - whatsapp
+  - discord
+  - openclaw
 ---
 
 # OpenClaw AI Agent Gateway
