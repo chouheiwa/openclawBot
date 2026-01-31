@@ -1,14 +1,3 @@
----
-title: OpenClaw AI Gateway
-emoji: 🦞
-colorFrom: blue
-colorTo: purple
-sdk: docker
-pinned: false
-license: mit
-app_port: 7860
----
-
 # OpenClaw AI Agent Gateway
 
 这是一个部署在 HuggingFace Spaces 上的 OpenClaw AI 代理网关。OpenClaw 是一个功能强大的 AI 助手，可以连接多种消息平台（WhatsApp、Telegram、Discord、Slack 等）并提供 24/7 的 AI 服务。
