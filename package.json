@@ -1,0 +1,19 @@
+{
+  "name": "openclaw-huggingface",
+  "version": "1.0.0",
+  "description": "OpenClaw AI Agent Gateway - HuggingFace Deployment",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "keywords": ["ai", "agent", "gateway", "openclaw"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "openclaw": "latest"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
