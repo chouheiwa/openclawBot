@@ -68,18 +68,23 @@ RUN cd /tmp \
     && curl -L https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 -o /usr/local/bin/ttyd \
     && chmod +x /usr/local/bin/ttyd
 
-# Create or reuse user with UID 1000 (required by HuggingFace) and grant sudo privileges
-RUN if id -u 1000 >/dev/null 2>&1; then \
-        USERNAME=$(id -nu 1000); \
-        if [ "$USERNAME" != "user" ]; then \
-            usermod -l user -d /home/user -m $USERNAME; \
-        fi; \
-    else \
+# Ensure user with UID 1000 exists and setup home directory
+# node:22-bookworm already has 'node' user with UID 1000, we'll use it as 'user'
+RUN if ! id -u 1000 >/dev/null 2>&1; then \
         useradd -m -u 1000 user; \
     fi \
-    && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && USERNAME=$(id -nu 1000) \
+    && if [ "$USERNAME" != "user" ]; then \
+        groupadd -f user || true; \
+        usermod -l user -d /home/user $USERNAME 2>/dev/null || true; \
+        groupmod -n user $USERNAME 2>/dev/null || true; \
+        if [ -d "/home/$USERNAME" ] && [ ! -d "/home/user" ]; then \
+            mv /home/$USERNAME /home/user; \
+        fi; \
+    fi \
     && mkdir -p /home/user/app \
-    && chown -R user:user /home/user
+    && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && chown -R 1000:1000 /home/user
 
 # Set working directory
 WORKDIR /home/user/app
