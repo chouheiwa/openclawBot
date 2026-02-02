@@ -32,6 +32,7 @@ tags:
 - 🔧 工具调用：日历、邮箱、文件系统访问
 - 🌐 HTTP API：OpenAI 兼容接口
 - 💻 Web Terminal：浏览器内 Shell 访问
+- 🖥️ VNC 远程桌面：浏览器自动化支持（Puppeteer）
 
 ## 🚀 快速开始
 
@@ -69,6 +70,7 @@ BACKUP_INTERVAL_MINUTES=60
 
 - **Gateway**: `https://your-space.hf.space/?token=YOUR_TOKEN`
 - **Web Terminal**: `https://your-space.hf.space/terminal`
+- **VNC Remote Desktop**: `https://your-space.hf.space/vnc` (用于浏览器操作)
 
 ## 📚 详细文档
 
@@ -76,6 +78,7 @@ BACKUP_INTERVAL_MINUTES=60
 - [⚙️ 环境变量配置](docs/CONFIG.md)
 - [💾 Google Drive 备份](docs/BACKUP.md)
 - [💻 Web Terminal 使用](docs/TERMINAL.md)
+- [🖥️ VNC 远程桌面使用](docs/VNC.md)
 - [❓ 常见问题](docs/FAQ.md)
 
 ## 🏗️ 架构
@@ -85,7 +88,8 @@ HuggingFace Spaces (Port 7860)
     ↓
   Nginx
     ├── /          → OpenClaw Gateway (18789)
-    └── /terminal  → ttyd Web Terminal (7681)
+    ├── /terminal  → ttyd Web Terminal (7681)
+    └── /vnc       → noVNC Remote Desktop (6080)
 ```
 
 ## 📄 许可证

@@ -22,6 +22,39 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install VNC, noVNC, Chrome and dependencies for Puppeteer
+RUN apt-get update && apt-get install -y \
+    # Chrome/Chromium dependencies
+    fonts-liberation \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libdbus-1-3 \
+    libdrm2 \
+    libgbm1 \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxkbcommon0 \
+    libxrandr2 \
+    xdg-utils \
+    chromium \
+    chromium-driver \
+    # VNC and desktop environment
+    xvfb \
+    x11vnc \
+    fluxbox \
+    novnc \
+    websockify \
+    x11-utils \
+    xauth \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install rclone and ttyd (precompiled binaries)
 RUN cd /tmp \
     && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip \
@@ -74,10 +107,16 @@ RUN mkdir -p /home/user/.openclaw
 
 # Set environment variables
 ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH
+    PATH=/home/user/.local/bin:$PATH \
+    DISPLAY=:99 \
+    VNC_PORT=5900 \
+    NOVNC_PORT=6080 \
+    VNC_PASSWORD=openclaw \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expose port 7860 (required by HuggingFace Spaces)
-EXPOSE 7860
+EXPOSE 7860 6080
 
 # Switch to root to start services (supervisor needs root for nginx)
 USER root
