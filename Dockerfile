@@ -68,8 +68,15 @@ RUN cd /tmp \
     && curl -L https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 -o /usr/local/bin/ttyd \
     && chmod +x /usr/local/bin/ttyd
 
-# Create user with UID 1000 (required by HuggingFace) and grant sudo privileges
-RUN useradd -m -u 1000 user \
+# Create or reuse user with UID 1000 (required by HuggingFace) and grant sudo privileges
+RUN if id -u 1000 >/dev/null 2>&1; then \
+        USERNAME=$(id -nu 1000); \
+        if [ "$USERNAME" != "user" ]; then \
+            usermod -l user -d /home/user -m $USERNAME; \
+        fi; \
+    else \
+        useradd -m -u 1000 user; \
+    fi \
     && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && mkdir -p /home/user/app \
     && chown -R user:user /home/user
